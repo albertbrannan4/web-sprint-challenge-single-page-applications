@@ -1,10 +1,11 @@
 import React from 'react';
 
 const Form = (props) => {
-    const { menu } = props
+    const { menu,formHandler } = props
     const onChange = (e) => {
-        const { name, value } = e.target;
-        console.log(name, " ", value);
+        const { name, value,checked,type } = e.target;
+        const valueToUse = type === "checkbox"? checked: value;
+        formHandler(name,valueToUse);
     }
     const onSubmit = (e)=>{
         e.preventDefault();
@@ -20,7 +21,7 @@ const Form = (props) => {
                 <form onSubmit={onSubmit} id='pizza-form'>
                    <div>
                     <label>Name
-                    <input id='name-input' type='text' name='name' />
+                    <input id='name-input' type='text' name='name' onChange={onChange}/>
                     </label>
                    </div>
                     <div>
@@ -54,10 +55,15 @@ const Form = (props) => {
                         {menu.toppings.map((topping, idx) => {
                             return (
                                 <label key={idx}>
-                                    <input type='checkbox' onChange={onChange} value={topping.value} name={`topping`} />{topping.label}
+                                    <input type='checkbox' onChange={onChange} value={topping.value} name={topping.value}/>{topping.label}
                                 </label>
                             )
                         })}
+                    </div>
+                    <div>
+                        <label>Special instructions
+                            <input id='special-text' type='text' name='specialInstructions' onChange={onChange}/>
+                        </label>
                     </div>
                     <input type='submit' value='Submit Pizza'/>
                 </form>

@@ -5,6 +5,7 @@ import Form from "./Form";
 
 const menu = {
   size: [
+    { value: '', label: 'Select One' },
     { value: 'small', label: 'Small' },
     { value: 'medium', label: 'Medium' },
     { value: 'large', label: 'Large' },
@@ -33,8 +34,22 @@ const menu = {
     {value:'extraCheese',label:'Extra Cheese'},
   ]
 }
+const initialFormValues={
+  name:'',
+  size:'',
+  sauce:'',
+  toppings:'',
+  glutenFree:false,
+  specialInstructions:''
+}
 const App = () => {
   const [pizzaMenu, setMenu] = useState(menu);
+  const [formValues, setFormValues] = useState(initialFormValues);
+
+  const formHandler = (name,value)=>{
+    setFormValues({...formValues,[name]:value})
+  }
+  console.log(formValues);
   return (
     <>
       <h1>Lambda Eats</h1>
@@ -44,7 +59,7 @@ const App = () => {
       </nav>
       <Switch>
         <Route path='/pizza'>
-          <Form menu={pizzaMenu} />
+          <Form menu={pizzaMenu} formHandler={formHandler} />
         </Route>
         <Route path='/'>
           <Home />
