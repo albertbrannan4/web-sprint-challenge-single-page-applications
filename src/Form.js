@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Form = (props) => {
-    const { menu,formHandler } = props
+    const { menu,formHandler, submitOrder, disabled } = props
     const onChange = (e) => {
         const { name, value,checked,type } = e.target;
         const valueToUse = type === "checkbox"? checked: value;
@@ -9,18 +9,22 @@ const Form = (props) => {
     }
     const onSubmit = (e)=>{
         e.preventDefault();
+        submitOrder();
     }
+
     return (
         <div>
             <div><h2>Build Your Own Pizza</h2></div>
-            <div>
+            {/* <div>
                 <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="pizza" />
-            </div>
+            </div> */}
             <div>
                 <h3>Build Your Own Pizza</h3>
+                
                 <form onSubmit={onSubmit} id='pizza-form'>
                    <div>
                     <label>Name
+                    <p>{props.errors.name}</p>
                     <input id='name-input' type='text' name='name' onChange={onChange}/>
                     </label>
                    </div>
@@ -65,7 +69,7 @@ const Form = (props) => {
                             <input id='special-text' type='text' name='specialInstructions' onChange={onChange}/>
                         </label>
                     </div>
-                    <input type='submit' value='Submit Pizza'/>
+                    <input id='order-button'disabled={disabled} type='submit' value='Submit Pizza'/>
                 </form>
             </div>
         </div>

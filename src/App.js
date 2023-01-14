@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 import Home from './Home';
 import Form from "./Form";
+import schema from "./formSchema";
+import * as yup from 'yup';
+import axios from 'axios';
 
 const menu = {
   size: [
@@ -35,6 +38,7 @@ const menu = {
   ]
 }
 
+
 const initialFormValues = {
   name: '',
   size: '',
@@ -55,13 +59,49 @@ const initialFormValues = {
   specialInstructions: ''
 }
 const App = () => {
-  const [pizzaMenu, setMenu] = useState(menu);
+  const [pizzaMenu] = useState(menu);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [errors, setErrors]= useState({})
+  const [disabled,setDisabled]=useState(false);
+  
+  useEffect(() => {
+    schema.isValid(formValues).then(valid => setDisabled(!valid))
+  }, [formValues])
+
+  const validate = (name,value)=>{
+    yup.reach(schema,name)
+      .validate(value)
+      .then(()=>setErrors({...errors,[name]:''}))
+      .catch((err)=> setErrors({...errors, [name]:err.errors[0]}))
+      
+  }
 
   const formHandler = (name, value) => {
+    validate(name,value);
     setFormValues({ ...formValues, [name]: value })
   }
-  console.log(formValues);
+
+  const postOrder = pizza => {
+    axios.post(`https://reqres.in/api/orders`,pizza)
+    .then(resp=>{
+      console.log(resp);
+    })
+    .catch(err=> console.error(err))
+    .finally(()=>setFormValues(initialFormValues))
+  }
+
+  const submitOrder = ()=>{
+
+    postOrder(formValues);
+    console.log(formValues);
+  }
+
+
+
+
+
+
+
   return (
     <>
       <h1>Lambda Eats</h1>
@@ -71,7 +111,7 @@ const App = () => {
       </nav>
       <Switch>
         <Route path='/pizza'>
-          <Form menu={pizzaMenu} formHandler={formHandler} />
+          <Form errors={errors} menu={pizzaMenu} formHandler={formHandler}  disabled={disabled} submitOrder={submitOrder} />
         </Route>
         <Route path='/'>
           <Home />
@@ -80,4 +120,8 @@ const App = () => {
     </>
   );
 };
+
+
+
 export default App;
+
