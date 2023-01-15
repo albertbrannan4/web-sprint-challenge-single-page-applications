@@ -1,11 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 import Home from './Home';
 import Form from "./Form";
 import schema from "./formSchema";
 import * as yup from 'yup';
 import axios from 'axios';
-
+import './App.css';
 const menu = {
   size: [
     { value: '', label: 'Select One' },
@@ -61,39 +61,38 @@ const initialFormValues = {
 const App = () => {
   const [pizzaMenu] = useState(menu);
   const [formValues, setFormValues] = useState(initialFormValues);
-  const [errors, setErrors]= useState({})
-  const [disabled,setDisabled]=useState(false);
-  
+  const [errors, setErrors] = useState({})
+  const [disabled, setDisabled] = useState(false);
+
   useEffect(() => {
     schema.isValid(formValues).then(valid => setDisabled(!valid))
   }, [formValues])
 
-  const validate = (name,value)=>{
-    yup.reach(schema,name)
+  const validate = (name, value) => {
+    yup.reach(schema, name)
       .validate(value)
-      .then(()=>setErrors({...errors,[name]:''}))
-      .catch((err)=> setErrors({...errors, [name]:err.errors[0]}))
-      
+      .then(() => setErrors({ ...errors, [name]: '' }))
+      .catch((err) => setErrors({ ...errors, [name]: err.errors[0] }))
+
   }
 
   const formHandler = (name, value) => {
-    validate(name,value);
+    validate(name, value);
     setFormValues({ ...formValues, [name]: value })
   }
 
   const postOrder = pizza => {
-    axios.post(`https://reqres.in/api/orders`,pizza)
-    .then(resp=>{
-      console.log(resp);
-    })
-    .catch(err=> console.error(err))
-    .finally(()=>setFormValues(initialFormValues))
+    axios.post(`https://reqres.in/api/orders`, pizza)
+      .then(resp => {
+        console.log(resp);
+      })
+      .catch(err => console.error(err))
+      .finally(() => setFormValues(initialFormValues))
   }
 
-  const submitOrder = ()=>{
+  const submitOrder = () => {
 
     postOrder(formValues);
-    console.log(formValues);
   }
 
 
@@ -104,14 +103,16 @@ const App = () => {
 
   return (
     <>
-      <h1>Lambda Eats</h1>
-      <nav>
-        <Link to='/'>Home</Link>
-        <Link id="order-pizza" to='/pizza'>Order</Link>
-      </nav>
+      <header>
+        <h1>Lambda Eats</h1>
+        <nav>
+          <Link to='/'>Home</Link>
+          <Link id="order-pizza" to='/pizza'>Order</Link>
+        </nav>
+      </header>
       <Switch>
         <Route path='/pizza'>
-          <Form errors={errors} menu={pizzaMenu} formHandler={formHandler}  disabled={disabled} submitOrder={submitOrder} />
+          <Form errors={errors} menu={pizzaMenu} formHandler={formHandler} disabled={disabled} submitOrder={submitOrder} />
         </Route>
         <Route path='/'>
           <Home />

@@ -32,7 +32,145 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+header nav{
+  width: 20%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+header nav a{
+  text-decoration: none;
+  color: rgb(51, 45, 45);
+}
+header nav a:hover{
+  color: rgb(7, 6, 6);
+  text-decoration: underline;
+}
+
+.introImg {
+  background-image: linear-gradient(to right bottom, rgba(10, 10, 10, 0.8), rgba(122, 124, 124, 0.8)), url('https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');
+  background-size: cover;
+  height: 50vh;
+  color: white;
+  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.introImg h2 {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.introImg a {
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  display: block;
+  border-radius: 12px;
+  width: 5rem;
+  padding: 1%;
+  text-align: center;
+}
+
+.introImg a:hover{
+  background-color: rgba(240, 255, 255, 0.637);
+  color: black;
+}
+
+
+/* resturaunt section -----------------------------------------------*/
+
+
+.restaurants h3{
+  padding-left: 3.5rem;
+}
+
+.cards{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card{
+  border: 1px solid rgba(43, 41, 41, 0.329);
+  margin:1%;
+  width: 16rem;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: rgb(241, 240, 240);
+}
+
+.card:hover{
+  border: 1px solid black;
+  background-color: #19191a6e;
+  color: azure;
+}
+
+
+
+.restaurant-img{
+  width: 16rem;
+  height: 25vh;
+}
+
+.card p{
+  text-align: start;
+}
+
+/*--------------Form------------*/
+
+.formHeader{
+  background-image: linear-gradient(to right bottom,rgba(32, 32, 32, 0.233),rgba(19, 20, 20, 0.623)), url("https://images.unsplash.com/photo-1593504049359-74330189a345?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGl6emF8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60");
+  height: 50vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(240, 255, 255, 0.699);
+  font-size: 3rem;
+}
+
+.inputRequired, .submit{
+  margin-top: 1%;
+  margin-bottom: 1%;
+  background-color: rgb(177, 177, 177);
+  color: white;
+  height: 10vh;
+}
+
+.submit{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2%;
+}
+
+.submit input{
+  width: 10rem;
+  height: 3rem;
+}
+
+#pizza-form{
+  margin: .5%;
+  margin-top: 2%;
+
 }
